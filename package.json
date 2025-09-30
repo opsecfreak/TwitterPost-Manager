@@ -9,13 +9,16 @@
   },
   "dependencies": {
     "@auth/core": "^0.34.2",
+    "@types/uuid": "^10.0.0",
     "axios": "^1.12.2",
     "next": "15.5.4",
     "next-auth": "^4.24.11",
+    "openai": "^5.23.1",
     "prisma": "^6.16.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "twitter-api-v2": "^1.27.0"
+    "twitter-api-v2": "^1.27.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
