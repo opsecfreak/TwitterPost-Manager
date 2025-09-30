@@ -27,6 +27,76 @@ export interface TweetResult {
   error?: string
 }
 
+export interface FacebookUser {
+  id: string
+  name: string
+  email?: string
+  picture?: {
+    data: {
+      url: string
+    }
+  }
+}
+
+export interface FacebookPage {
+  id: string
+  name: string
+  access_token: string
+  category: string
+  category_list?: Array<{
+    id: string
+    name: string
+  }>
+}
+
+export interface FacebookPostData {
+  message: string
+  link?: string
+  published?: boolean
+}
+
+export interface FacebookPostResult {
+  success: boolean
+  data?: {
+    id: string
+    post_id?: string
+  }
+  error?: string
+}
+
+export interface DraftPost {
+  id: string
+  title: string
+  content: string
+  platform: "twitter" | "facebook"
+  facebookPageId?: string
+  createdAt: string
+  updatedAt: string
+  userId: string
+}
+
+export interface OptimizeRequest {
+  content: string
+  platform: "twitter" | "facebook"
+  tone?: "professional" | "casual" | "engaging" | "informative"
+  audience?: string
+}
+
+export interface OptimizeResponse {
+  success: boolean
+  data?: {
+    originalContent: string
+    optimizedContent: string
+    suggestions: string[]
+    characterCount: number
+    platformLimits: {
+      twitter: number
+      facebook: number
+    }
+  }
+  error?: string
+}
+
 export interface ApiResponse<T = any> {
   success: boolean
   data?: T
@@ -42,7 +112,12 @@ export interface HealthStatus {
   services: {
     database?: "connected" | "disconnected"
     twitter_api?: "configured" | "not_configured"
+    facebook_api?: "configured" | "not_configured"
+    openai_api?: "configured" | "not_configured"
     nextauth?: "configured" | "not_configured"
   }
   version?: string
 }
+
+export type Platform = "twitter" | "facebook"
+export type PostTone = "professional" | "casual" | "engaging" | "informative"
