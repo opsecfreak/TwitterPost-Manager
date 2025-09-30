@@ -1,27 +1,5 @@
 import { TwitterApi, TwitterV2IncludesHelper, TweetV2PostTweetResult } from "twitter-api-v2"
-
-export interface TwitterUser {
-  id: string
-  name: string
-  username: string
-  profile_image_url?: string
-  public_metrics?: {
-    followers_count: number
-    following_count: number
-    tweet_count: number
-  }
-}
-
-export interface TweetData {
-  text: string
-  media_ids?: string[]
-}
-
-export interface TweetResult {
-  success: boolean
-  data?: TweetV2PostTweetResult
-  error?: string
-}
+import type { TwitterUser, TweetData, TweetResult } from "@/types"
 
 export class TwitterClient {
   private client: TwitterApi

@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth-options"
-import TwitterClient, { TweetData } from "@/lib/twitter"
+import TwitterClient from "@/lib/twitter"
+import { TweetData } from "@/types"
 
 export default async function handler(
   req: NextApiRequest,

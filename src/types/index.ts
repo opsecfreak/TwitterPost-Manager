@@ -1,3 +1,5 @@
+import { TweetV2PostTweetResult } from "twitter-api-v2"
+
 export interface TwitterUser {
   id: string
   name: string
@@ -21,11 +23,7 @@ export interface TweetData {
 
 export interface TweetResult {
   success: boolean
-  data?: {
-    id: string
-    text: string
-    edit_history_tweet_ids: string[]
-  }
+  data?: TweetV2PostTweetResult
   error?: string
 }
 

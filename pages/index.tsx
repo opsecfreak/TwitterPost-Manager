@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import Layout from "@/components/Layout"
-import { TwitterUser } from "@/lib/twitter"
+import { TwitterUser } from "@/types"
 
 interface TweetComposerProps {
   onTweetPosted: () => void
