@@ -1,36 +1,157 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Social Media Manager
 
-## Getting Started
+A Next.js application for managing social media posts with Twitter integration. Built with NextAuth.js for secure OAuth 2.0 authentication and the Twitter API v2.
 
-First, run the development server:
+## Features
 
+- 🔐 Secure Twitter OAuth 2.0 authentication
+- 📝 Compose and post tweets directly from the app
+- 👤 View Twitter profile information and metrics
+- 🎨 Modern, responsive UI with Tailwind CSS
+- 🛡️ Type-safe with TypeScript
+- 🔍 API health monitoring
+
+## Prerequisites
+
+- Node.js 18+ 
+- A Twitter Developer Account
+- Twitter App with OAuth 2.0 enabled
+
+## Twitter App Setup
+
+1. Go to [Twitter Developer Portal](https://developer.twitter.com/)
+2. Create a new App
+3. In App Settings → User authentication settings:
+   - Enable OAuth 2.0
+   - Type: Web App
+   - Callback URL: `http://localhost:3000/api/auth/callback/twitter`
+   - Website URL: `http://localhost:3000`
+4. Note down your Client ID and Client Secret
+
+## Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd social-manager
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create `.env.local` file in the root directory:
+```env
+TWITTER_CLIENT_ID=your_twitter_client_id
+TWITTER_CLIENT_SECRET=your_twitter_client_secret
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_nextauth_secret
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Generate a NextAuth secret:
+```bash
+openssl rand -base64 32
+```
 
-## Learn More
+## Development
 
-To learn more about Next.js, take a look at the following resources:
+Run the development server:
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open [http://localhost:3000](http://localhost:3000) to see the application.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Endpoints
 
-## Deploy on Vercel
+- `GET /api/health` - Health check and service status
+- `GET /api/twitter/me` - Get authenticated user's Twitter profile
+- `POST /api/twitter/post` - Post a tweet
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Example API Usage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Post a tweet:
+```javascript
+const response = await fetch('/api/twitter/post', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ text: 'Hello from my app!' })
+})
+```
+
+## Project Structure
+
+```
+/social-manager
+├── pages/
+│   ├── index.tsx                    # Main dashboard
+│   ├── _app.tsx                     # App wrapper with SessionProvider
+│   ├── auth/
+│   │   └── error.tsx                # Authentication error page
+│   └── api/
+│       ├── health.ts                # Health check endpoint
+│       ├── auth/
+│       │   └── [...nextauth].ts     # NextAuth configuration
+│       └── twitter/
+│           ├── me.ts                # Get user profile
+│           └── post.ts              # Post tweets
+├── src/
+│   ├── components/
+│   │   ├── Layout.tsx               # Page layout wrapper
+│   │   └── AuthButton.tsx           # Authentication button
+│   ├── lib/
+│   │   ├── auth-options.ts          # NextAuth configuration
+│   │   └── twitter.ts               # Twitter API client
+│   ├── styles/
+│   │   └── globals.css              # Global styles
+│   └── types/
+│       └── index.ts                 # TypeScript type definitions
+├── .env.local                       # Environment variables
+├── next.config.ts                   # Next.js configuration
+└── package.json
+```
+
+## Security Features
+
+- OAuth 2.0 authentication flow
+- Secure token handling with NextAuth.js
+- API route protection with session validation
+- Input validation and sanitization
+- Error handling and user feedback
+
+## Production Deployment
+
+1. Set up environment variables in your hosting platform
+2. Update `NEXTAUTH_URL` to your production domain
+3. Update Twitter app callback URLs to match production domain
+4. Build and deploy:
+
+```bash
+npm run build
+npm start
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Authentication Error**: Check Twitter app configuration and callback URLs
+2. **API Errors**: Verify environment variables are set correctly
+3. **Build Errors**: Ensure all dependencies are installed with `npm install`
+
+### Health Check
+
+Visit `/api/health` to check service status and configuration.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
